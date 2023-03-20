@@ -1,0 +1,51 @@
+* {
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 500;
+}
+:root {
+  --main-color: #6327FE;
+  --sub-color: #EAE8FE;
+  --gray : #BDBDBD;
+}
+
+/* reset */
+html {
+  font-size: 10px;
+}
+ul {
+  padding: 0;
+}
+li {
+  list-style: none;
+}
+body, p, ul, h1, h2, h3 {
+  margin: 0;
+}
+img {
+  vertical-align: top;
+}
+input {
+  outline: none;
+}
+button, input {
+  background: 0;
+  padding: 0;
+  border: 0;
+  box-sizing: border-box;
+}
+button:not(:disabled),
+input:not(:disabled) {
+  cursor: pointer;
+}
+
+
+.a11y-hidden {
+  clip: rect(1px, 1px, 1px, 1px);
+  clip-path: inset(50%);
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+}
