@@ -27,9 +27,16 @@ body {
 }
 .vending-machine-left {
   gap: 20px;
+  padding: 31px 27px 28px;
+  box-sizing: border-box;
+}
+.vending-machine-right-wrap{
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 .vending-machine-right {
-  height: 474px;
+  height: 100%;
 }
 .vending-machine-right.top {
   height: 50px;
@@ -39,7 +46,6 @@ body {
   align-self: flex-end;
   display: grid;
   width: 100%;
-  padding: 0 27px;
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
 }
@@ -64,6 +70,7 @@ body {
 }
 .product>.name {
   font-size: 0.9rem;
+  line-height: 1.3rem;
   margin: auto;
 }
 .round-text-box {
@@ -73,6 +80,7 @@ body {
   border-radius: 13px;
   background: var(--main-color);
   color: #FFF;
+  line-height: 100%;
 }
 
 .cover {
@@ -100,16 +108,9 @@ body {
 }
 
 .order-wrap {
-  align-self: flex-start;
-  padding: 0 27px;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 12px;
-}
-.order-rows {
-  width: 100%;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: 1fr 1fr 106px;
   gap: 12px;
 }
 .order-left {
@@ -153,7 +154,6 @@ body {
 }
 
 .list {
-  height: inherit;
   box-sizing: border-box;
   background: var(--sub-color);
   border: 1px solid var(--gray);
@@ -284,8 +284,7 @@ body {
   .vending-machine-wrap {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 20px 28px;
-    height: 545px;
+    gap: 0 20px;
     width: 748px;
   }
   .vending-machine-left {
