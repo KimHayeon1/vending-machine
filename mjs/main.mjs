@@ -1,11 +1,6 @@
-const products = document.getElementsByClassName('product');
 const cartList = document.getElementById('cart');
 
-[...products].forEach(product => {
-  product.addEventListener('click', handleProduct);
-});
-
-function handleProduct(event) {
+export function handleProduct(event) {
   const current = event.currentTarget;
   const urlImg = current.getElementsByTagName('img')[0].getAttribute('src')
 
@@ -16,6 +11,23 @@ function handleProduct(event) {
     current.style.outline = "";
   }
 }
+
+class Product {
+  constructor (url, price, stock, cartCnt, getCnt) {
+    this.url = url
+    this.price = price
+    this.stock = stock
+    this.cartCnt = cartCnt
+    this.getCnt = getCnt
+  }
+}
+
+const originalCola = new Product('original-cola', 1000, 5, 0, 0);
+const violetCola = new Product('violet-cola', 1000, 5, 0, 0);
+const yellowCola = new Product('yellow-cola', 1000, 5, 0, 0);
+const coolCola = new Product('cool-cola', 1000, 5, 0, 0);
+const greenCola = new Product('green-cola', 1000, 5, 0, 0);
+const orangeCola = new Product('orange-cola', 1000, 5, 0, 0);
 
 function createCartItem() {
   const li = document.createElement('li')
