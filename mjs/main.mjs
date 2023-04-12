@@ -1,14 +1,17 @@
-const cartList = document.getElementById('cart');
+const btnGet = document.querySelector('[value="획득"]');
+const cart = document.getElementById('cart');
+const getList = document.getElementById('get-list');
+const productList = document.querySelectorAll('.product');
 
 export function handleProduct(event) {
   const current = event.currentTarget;
-  const value = current.value;
+const value = current.value;
   if (!current.style.outline) {
     current.style.outline = "3px solid var(--main-color)";
-    createCartItem(value);
+    createCartItem(value, cart);
   } else {
     current.style.outline = "";
-    deleteCartItem(value);
+    deleteCartItem(value, cart);
   }
 }
 
@@ -31,7 +34,7 @@ products.greenCola = new Product('green-cola', 'Green_Cola', 1000, 150, 0, 0);
 products.orangeCola = new Product('orange-cola', 'Orange_Cola', 1000, 5, 0, 0);
 
 // 장바구니 상품 추가
-function createCartItem(value) {
+function createCartItem(value, ul) {
   const li = document.createElement('li')
   const img = document.createElement('img')
   const p = document.createElement('p')
@@ -44,24 +47,19 @@ function createCartItem(value) {
   input.value = '1';
   input.setAttribute('type', 'number');
   input.setAttribute('class', 'amount');
-  // input.setAttribute('max', '10');
   
-  cartList.appendChild(li);
+  ul.appendChild(li);
   li.appendChild(img);
   li.appendChild(p);
   li.appendChild(input);
-  
-  
-  // 장바구니 상품 수량에 이벤트 등록
-  input.addEventListener('keyup', inpAmountHandle)
 }
 
 function deleteCartItem(value) {
   const item = document.getElementById(value);
-  cartList.removeChild(item)
+  cart.removeChild(item)
 }
 
-function inpAmountHandle(e) {
+export function inpAmountHandle(e) {
   const stock = products[e.target.parentNode.id].stock;
   if (!e.target.value || !e.target.validity.valid) {
     alert('숫자를 입력해주세요.')
@@ -76,4 +74,21 @@ function inpAmountHandle(e) {
     alert(`재고수량이 ${stock}개 존재합니다. 재고수량 이하로 구입 수량을 입력해주세요.`)
     e.target.value = stock;
   }
+}
+
+btnGet.addEventListener('click', btnGetHandle)
+
+function btnGetHandle() {
+  const list = []
+  getList.childNodes.forEach(v => list.push(v.id))
+  cart.childNodes.forEach(v => {
+    products[v.id].getCnt += parseInt(v.childNodes[2].value);
+    if (list.includes(v.id)) {
+      getList.querySelector(`#${v.id}`).childNodes[2].value = products[v.id].getCnt
+    } else {
+      getList.appendChild(v.cloneNode(true))
+    }
+  });
+  cart.replaceChildren()
+  productList.forEach(v => v.style.outline = "")
 }
