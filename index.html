@@ -19,14 +19,14 @@
       <h2 class="a11y-hidden">음료 구입</h2>
       <ul class="product-list">
         <li>
-          <button value="originalCola" class="product" type="button">
+          <button data-name="originalCola" class="product" type="button">
             <img src="images/original-cola.png" alt="">
             <span class="name">Original_Cola</span>
             <span class="round-text-box">1000원</span>
           </button>
         </li>
         <li>
-          <button value="violetCola" class="product" type="button" disabled>
+          <button data-name="violetCola" class="product" type="button" disabled>
             <span class="cover"></span>
             <img src="images/violet-cola.png" alt="">
             <span class="name">Violet_Cola</span>
@@ -34,28 +34,28 @@
           </button>
         </li>
         <li>
-          <button value="yellowCola" class="product" type="button">
+          <button data-name="yellowCola" class="product" type="button">
             <img src="images/yellow-cola.png" alt="">
             <span class="name">Yellow_Cola</span>
             <span class="round-text-box">1000원</span>
           </button>
         </li>
         <li>
-          <button value="coolCola" class="product" type="button">
+          <button data-name="coolCola" class="product" type="button">
             <img src="images/cool-cola.png" alt="">
             <span class="name">Cool_Cola</span>
             <span class="round-text-box">1000원</span>
           </button>
         </li>
         <li>
-          <button value="greenCola" class="product" type="button">
+          <button data-name="greenCola" class="product" type="button">
             <img src="images/green-cola.png" alt="">
             <span class="name">Green_Cola</span>
             <span class="round-text-box">1000원</span>
           </button>
         </li>
         <li>
-          <button value="orangeCola" class="product" type="button">
+          <button data-name="orangeCola" class="product" type="button">
             <img src="images/orange-cola.png" alt="">
             <span class="name">Orange_Cola</span>
             <span class="round-text-box">1000원</span>
@@ -67,8 +67,8 @@
         <div class="sub-box order-left">
           <span>잔액:</span>
           <div class="text-right">
-            <span>1,000</span>
-            <span>원</span>
+            <span id="balance">1,000</span>
+            원
           </div>
         </div>
         <button class="white-btn" type="button">거스름돈 반환</button>
@@ -87,7 +87,7 @@
         <div class="sub-box">
           소지금:
           <div class="text-right">
-            <span>25,000</span>
+            <span id="my-money">25,000</span>
             원
           </div>
         </div>

@@ -1,23 +1,32 @@
+const order = document.querySelector('.order-wrap');
+const balance = order.querySelector('#balance');
+const amountInp = order.querySelector('.form-input.order-left');
+const depositBtn = order.querySelector('[value="입금"]');
+
 const btnGet = document.querySelector('[value="획득"]');
 const cart = document.getElementById('cart');
 const getList = document.getElementById('get-list');
 const productList = document.querySelectorAll('.product');
 
+const myMoney = document.querySelector('#my-money');
+
+depositBtn.addEventListener('click', depositBtnHandle);
+
 export function handleProduct(event) {
   const current = event.currentTarget;
-const value = current.value;
+  const name = current.dataset.name;
   if (!current.style.outline) {
     current.style.outline = "3px solid var(--main-color)";
-    createCartItem(value, cart);
+    createCartItem(name, cart);
   } else {
     current.style.outline = "";
-    deleteCartItem(value, cart);
+    deleteCartItem(name, cart);
   }
 }
 
 class Product {
-  constructor (src, name, price, stock, cartCnt, getCnt) {
-    this.src = src
+  constructor (img, name, price, stock, cartCnt, getCnt) {
+    this.img = img
     this.name = name
     this.price = price
     this.stock = stock
@@ -34,16 +43,16 @@ products.greenCola = new Product('green-cola', 'Green_Cola', 1000, 150, 0, 0);
 products.orangeCola = new Product('orange-cola', 'Orange_Cola', 1000, 5, 0, 0);
 
 // 장바구니 상품 추가
-function createCartItem(value, ul) {
+function createCartItem(name, ul) {
   const li = document.createElement('li')
   const img = document.createElement('img')
   const p = document.createElement('p')
   const input = document.createElement('input')
   
-  li.setAttribute('id', value);
-  img.setAttribute('src', `images/${products[value].src}.png`);
+  li.setAttribute('id', name);
+  img.setAttribute('src', `images/${products[name].img}.png`);
   p.setAttribute('class', 'name');
-  p.textContent = products[value].name;
+  p.textContent = products[name].name;
   input.value = '1';
   input.setAttribute('type', 'number');
   input.setAttribute('class', 'amount');
@@ -54,10 +63,28 @@ function createCartItem(value, ul) {
   li.appendChild(input);
 }
 
-function deleteCartItem(value) {
-  const item = document.getElementById(value);
+function deleteCartItem(name) {
+  const item = document.getElementById(name);
   cart.removeChild(item)
 }
+
+function depositBtnHandle() {
+  if (amountInp.value) {
+    const myMoneyVal = parseInt((myMoney.textContent).replace(/\,/g, ''));
+    const amountVal = parseInt(amountInp.value);
+    if (amountVal > myMoneyVal) {
+      alert('소지금이 부족합니다.');
+    } else {
+    const balanceVal = parseInt((balance.textContent).replace(/\,/g, ''));
+      balance.textContent = new Intl.NumberFormat().format(balanceVal + amountVal);
+      myMoney.textContent = new Intl.NumberFormat().format(myMoneyVal - amountVal);
+      amountInp.value = '';
+    }
+  } else {
+    alert('금액을 입력해주세요.');
+  }
+}
+
 
 export function inpAmountHandle(e) {
   const stock = products[e.target.parentNode.id].stock;
@@ -88,7 +115,14 @@ function btnGetHandle() {
     } else {
       getList.appendChild(v.cloneNode(true))
     }
+    // 품절되면
+    if(!products[v.id].stock) {
+      soldOut();
+    }
   });
-  cart.replaceChildren()
-  productList.forEach(v => v.style.outline = "")
+  cart.replaceChildren();
+  productList.forEach(v => v.style.outline = "");
+}
+
+function soldOut(target) {
 }
