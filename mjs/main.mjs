@@ -110,6 +110,7 @@ function btnGetHandle() {
   getList.childNodes.forEach(v => list.push(v.id))
   cart.childNodes.forEach(v => {
     products[v.id].getCnt += parseInt(v.childNodes[2].value);
+    products[v.id].stock -= parseInt(v.childNodes[2].value)
     if (list.includes(v.id)) {
       getList.querySelector(`#${v.id}`).childNodes[2].value = products[v.id].getCnt
     } else {
@@ -117,7 +118,7 @@ function btnGetHandle() {
     }
     // 품절되면
     if(!products[v.id].stock) {
-      soldOut();
+      soldOut(document.querySelector(`[data-name="${v.id}"]`));
     }
   });
   cart.replaceChildren();
@@ -125,4 +126,8 @@ function btnGetHandle() {
 }
 
 function soldOut(target) {
+  const span = document.createElement('span');
+  span.classList.add('cover');
+  target.setAttribute('disabled', '')
+  target.prepend(span);
 }
