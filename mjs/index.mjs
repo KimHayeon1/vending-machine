@@ -10,4 +10,4 @@ const cart = document.getElementById('cart');
 });
 
 // 장바구니 상품 수량 input에 이벤트 등록
-cart.addEventListener('keyup', inpAmountHandle);
+cart.addEventListener('change', inpAmountHandle);

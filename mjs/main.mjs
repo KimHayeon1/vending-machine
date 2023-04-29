@@ -91,16 +91,20 @@ export function inpAmountHandle(e) {
   if (!e.target.value || !e.target.validity.valid) {
     alert('숫자를 입력해주세요.')
     e.target.value = 1
-  } else if (e.target.value > 100) {
-    alert('최대 100개까지 구매 가능합니다.')
-    e.target.value = 100
-  } else if (e.target.value < 1) {
+  }  else if (e.target.value < 1) {
     alert('1개 이상 입력해주세요.')
     e.target.value = 1
   } else if (e.target.value > stock) {
     alert(`재고수량이 ${stock}개 존재합니다. 재고수량 이하로 구입 수량을 입력해주세요.`)
     e.target.value = stock;
+  } else if (e.target.value > 100) {
+    alert('최대 100개까지 구매 가능합니다.')
+    e.target.value = 100
   }
+}
+
+function setInpAmount() {
+  
 }
 
 btnGet.addEventListener('click', btnGetHandle)
