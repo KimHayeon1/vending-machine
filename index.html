@@ -67,13 +67,13 @@
         <div class="sub-box order-left">
           <span>잔액:</span>
           <div class="text-right">
-            <span id="balance">1,000</span>
+            <span id="balance">0</span>
             원
           </div>
         </div>
         <button class="white-btn" type="button">거스름돈 반환</button>
-  
-        <input class="form-input order-left" type="number" placeholder="입금액 입력" required>
+        <!-- required? -->
+        <input class="form-input order-left" min="1000" step="1000" type="number" placeholder="입금액 입력" required>
         <input class="white-btn" type="submit" value="입금">
   
         <ul class="list order-left" id="cart"></ul>
@@ -99,7 +99,7 @@
       <ul class="list" id="get-list"></ul>
       <div class="total">
         총금액:
-        <span>9,000</span>
+        <span>0</span>
         원
       </div>
     </section>
