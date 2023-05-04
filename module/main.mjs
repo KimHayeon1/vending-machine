@@ -26,41 +26,31 @@ export function handleProduct(event) {
 }
 
 class Product {
-  constructor (img, name, price, stock, getCnt) {
+  constructor (img, name, price, stock) {
     this.img = img
     this.name = name
     this.price = price
     this.stock = stock
-    this.getCnt = getCnt
   }
 }
+// json으로 바꾸기
 const products = {};
-products.originalCola = new Product('original-cola', 'Original_Cola',  1000, 15, 0);
-products.violetCola = new Product('violet-cola', 'Violet_Cola', 1000, 15, 0);
-products.yellowCola = new Product('yellow-cola', 'Yellow_Cola', 1000, 15, 0);
-products.coolCola = new Product('cool-cola', 'Cool_Cola', 1000, 15, 0);
-products.greenCola = new Product('green-cola', 'Green_Cola', 1000, 150, 0);
-products.orangeCola = new Product('orange-cola', 'Orange_Cola', 1000, 5, 0);
+products.originalCola = new Product('original-cola.png', 'Original_Cola',  1000, 15);
+products.violetCola = new Product('violet-cola.png', 'Violet_Cola', 1000, 15);
+products.yellowCola = new Product('yellow-cola.png', 'Yellow_Cola', 1000, 15);
+products.coolCola = new Product('cool-cola.png', 'Cool_Cola', 1000, 15);
+products.greenCola = new Product('green-cola.png', 'Green_Cola', 1000, 150);
+products.orangeCola = new Product('orange-cola.png', 'Orange_Cola', 1000, 5);
 
 // 장바구니 상품 추가
 function createCartItem(name, ul) {
-  const li = document.createElement('li')
-  const img = document.createElement('img')
-  const p = document.createElement('p')
-  const input = document.createElement('input')
-  
-  li.setAttribute('id', name);
-  img.setAttribute('src', `images/${products[name].img}.png`);
-  p.setAttribute('class', 'name');
-  p.textContent = products[name].name;
-  input.value = '1';
-  input.setAttribute('type', 'number');
-  input.setAttribute('class', 'amount');
-  
-  ul.appendChild(li);
-  li.appendChild(img);
-  li.appendChild(p);
-  li.appendChild(input);
+  ul.innerHTML += `
+    <li id=${name}>
+      <img src="images/${products[name].img}" alt="">
+      <p class="name">${products[name].name}</p>
+      <input type="number" class="amount" value=1>
+    </li>
+  `
 }
 
 function deleteCartItem(name) {
@@ -89,15 +79,15 @@ function depositBtnHandle() {
   }
 }
 
-export function inpAmountHandle(e) {
-  const obj = setInpAmount(e)
+export function inpQuantityHandle(e) {
+  const obj = quantityCheck(e)
   if (obj) {
     alert(obj.alertTxt);
     e.target.value = obj.val;
   }
 }
 
-function setInpAmount(e) {
+function quantityCheck(e) {
   const stock = products[e.target.parentNode.id].stock;
   if (!e.target.value) {
     return {alertTxt: '숫자를 입력해주세요.', val: 1}
@@ -129,13 +119,12 @@ function btnGetHandle() {
   changeTotalAmount(cartTotalAmount);
 
   const list = [];
-  getList.childNodes.forEach(v => list.push(v));
-  console.log(list)
+  getList.childNodes.forEach(v => list.push(v.id));
   cart.childNodes.forEach(v => {
-    products[v.id].getCnt += parseInt(v.childNodes[2].value);
+    // getCnt 속성 없애기
     products[v.id].stock -= parseInt(v.childNodes[2].value)
     if (list.includes(v.id)) {
-      getList.querySelector(`#${v.id}`).childNodes[2].value = products[v.id].getCnt
+      getList.querySelector(`#${v.id}`).childNodes[2].value = parseInt(v.childNodes[2].value) + parseInt(getList.querySelector(`#${v.id}`).childNodes[2].value)
     } else {
       getList.appendChild(v.cloneNode(true))
     }
