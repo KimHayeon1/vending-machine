@@ -1,3 +1,4 @@
+const cart = document.getElementById('cart');
 const order = document.querySelector('.order-wrap');
 const balance = order.querySelector('#balance');
 const amountInp = order.querySelector('.form-input.order-left');
@@ -5,14 +6,61 @@ const depositBtn = order.querySelector('#deposit-btn');
 
 const changeBtn = document.querySelector('#change-btn');
 const btnGet = document.querySelector('#get-btn');
-const cart = document.getElementById('cart');
 const getList = document.querySelector('#get-list');
 const total = document.querySelector('.total span');
-const productList = document.querySelectorAll('.product');
 
 const myMoney = document.querySelector('#my-money');
 
 depositBtn.addEventListener('click', depositBtnHandle);
+let productList;
+
+// 상품 데이터 가져오기
+/***** 모든 함수: 데이터 가져온 후 실행 *****/
+let products;
+(async () => {
+  const res = await fetch('./productsData.json');
+  const json = await res.json();
+  products = json;
+
+  createProducts();
+})();
+
+// 상품 동적 생성
+const createProducts = () => {
+  const ul = document.querySelector('.product-list');
+
+  let allProductEl = '';
+  const keys = Object.keys(products);
+  keys.forEach((key) => {
+    if (products[key].stock) {
+      console.log(products[key].stock);
+      allProductEl += `<li>
+      <button data-name=${key} class="product" type="button">
+        <img src=${products[key].img} alt="" />
+        <span class="name">${products[key].name}</span>
+        <span class="round-text-box">${products[key].price}원</span>
+      </button>
+    </li>`;
+    } else {
+      // 품절 상품 표시
+      allProductEl += `<li>
+      <button data-name=${key} class="product" type="button" 
+      disabled>
+      <span class="cover"></span>
+        <img src=${products[key].img} alt="" />
+        <span class="name">${products[key].name}</span>
+        <span class="round-text-box">${products[key].price}원</span>
+      </button>
+    </li>`;
+    }
+  });
+  ul.innerHTML = allProductEl;
+  // 상품 이벤트 리스너
+  productList = document.querySelectorAll('.product');
+  productList.forEach((product) => {
+    product.addEventListener('click', handleProduct);
+  });
+};
 
 export function handleProduct(event) {
   const current = event.currentTarget;
@@ -26,33 +74,11 @@ export function handleProduct(event) {
   }
 }
 
-class Product {
-  constructor(img, name, price, stock) {
-    this.img = img;
-    this.name = name;
-    this.price = price;
-    this.stock = stock;
-  }
-}
-// json으로 바꾸기
-const products = {};
-products.originalCola = new Product(
-  'original-cola.png',
-  'Original_Cola',
-  1000,
-  15
-);
-products.violetCola = new Product('violet-cola.png', 'Violet_Cola', 1000, 15);
-products.yellowCola = new Product('yellow-cola.png', 'Yellow_Cola', 1000, 15);
-products.coolCola = new Product('cool-cola.png', 'Cool_Cola', 1000, 15);
-products.greenCola = new Product('green-cola.png', 'Green_Cola', 1000, 150);
-products.orangeCola = new Product('orange-cola.png', 'Orange_Cola', 1000, 5);
-
 // 장바구니 상품 추가
 function createCartItem(name, ul) {
   ul.innerHTML += `
     <li id=${name}>
-      <img src="images/${products[name].img}" alt="">
+      <img src="${products[name].img}" alt="">
       <p class="name">${products[name].name}</p>
       <input type="number" class="amount" value=1>
     </li>
@@ -126,7 +152,6 @@ function btnGetHandle() {
     alert(`잔액이 ${cartTotalAmount - balanceVal}원 부족합니다.`);
     return;
   }
-  console.log(balanceVal);
   // 잔액 변경
   balance.textContent = balanceVal - cartTotalAmount;
   // 총금액 변경
@@ -138,9 +163,9 @@ function btnGetHandle() {
   [...cartList].forEach((v) => {
     products[v.id].stock -= parseInt(v.children[2].value);
     if (list.includes(v.id)) {
-      getList.querySelector(`#${v.id}`).children[2].value =
+      getList.querySelector(`#${v.id}`).children[2].textContent =
         parseInt(v.children[2].value) +
-        parseInt(getList.querySelector(`#${v.id}`).children[2].value);
+        parseInt(getList.querySelector(`#${v.id}`).children[2].textContent);
     } else {
       const clone = v.cloneNode(true);
 
@@ -155,7 +180,6 @@ function btnGetHandle() {
       getList.appendChild(clone);
     }
     // 품절 표시
-    console.log(products[v.id]);
     if (!products[v.id].stock) {
       soldOut(document.querySelector(`[data-name="${v.id}"]`));
     }
@@ -197,3 +221,6 @@ const handleChangeBtn = () => {
 };
 
 changeBtn.addEventListener('click', handleChangeBtn);
+
+// 장바구니 상품 수량 input에 이벤트 등록
+cart.addEventListener('change', inpQuantityHandle);
