@@ -5,7 +5,7 @@ body {
 
 .logo {
   text-align: center;
-  min-width: 320px;
+  min-width: 360px;
 }
 
 .vending-machine-wrap {
@@ -25,12 +25,11 @@ body {
   box-sizing: border-box;
   width: 360px;
 }
-.vending-machine-right-wrap{
+.vending-machine-right-wrap {
   display: flex;
   flex-direction: column;
   gap: 20px;
   width: 360px;
-  
 }
 .vending-machine-right.top {
   padding: 9px 27px;
@@ -62,11 +61,11 @@ body {
   position: relative;
   color: black;
 }
-.product>img {
+.product > img {
   margin: 0 auto;
   width: 36px;
 }
-.product>.name {
+.product > .name {
   font-size: 0.9rem;
   line-height: 1.3rem;
   margin: auto;
@@ -77,7 +76,7 @@ body {
   font-size: 1.2rem;
   border-radius: 13px;
   background: var(--main-color);
-  color: #FFF;
+  color: #fff;
   line-height: 100%;
 }
 
@@ -90,7 +89,7 @@ body {
   border-radius: 10px;
 }
 .cover::after {
-  content: "품절";
+  content: '품절';
   position: absolute;
   top: 50%;
   left: 50%;
@@ -132,7 +131,7 @@ body {
   display: flex;
   align-items: center;
 }
-.sub-box>.text-right {
+.sub-box > .text-right {
   margin-left: auto;
 }
 .white-btn,
@@ -145,7 +144,7 @@ body {
 }
 
 .purple-btn {
-  color: #FFF;
+  color: #fff;
   background: var(--main-color);
 }
 
@@ -157,11 +156,11 @@ body {
   padding: 12px 6px 12px 12px;
   overflow-y: scroll;
 }
-.list>li:not(:first-child) {
+.list > li:not(:first-child) {
   margin-top: 6px;
 }
-.list>li {
-  background: #FFF;
+.list > li {
+  background: #fff;
   border-radius: 5px;
   display: flex;
   align-items: center;
@@ -220,7 +219,7 @@ body {
   text-align: right;
 }
 
-.vending-machine-right .list{
+.vending-machine-right .list {
   height: 364px;
   margin: 13px 0 6px;
 }
@@ -230,7 +229,7 @@ body {
   width: 12px;
 }
 .list::-webkit-scrollbar-thumb {
-  background: #FFF;
+  background: #fff;
   border-radius: 10px;
   background-clip: padding-box;
   border: 4px solid transparent;
@@ -239,13 +238,13 @@ body {
 /* media */
 @media (width < 400px) {
   body {
-    background-color: #FFF;
+    background-color: #fff;
   }
   .vending-machine-right {
     height: auto;
   }
   .vending-machine-wrap {
-    width: clamp(320px, 100%, 360px);
+    width: 360px;
     margin-bottom: 43px;
   }
   .vending-machine-right.top {
@@ -254,7 +253,7 @@ body {
   .logo {
     margin-bottom: 8px;
   }
-  .logo>img {
+  .logo > img {
     width: 188px;
   }
 }
@@ -269,7 +268,7 @@ body {
   .logo {
     margin-bottom: 32px;
   }
-  .logo>img {
+  .logo > img {
     width: 280px;
   }
   .vending-machine-right.top {
