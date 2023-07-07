@@ -173,6 +173,13 @@ const drawBuyProducts = () => {
   });
 };
 
+const changeTotalAmount = (cartTotalAmount) => {
+  const totalAmount = parseInt(total.textContent.replace(/\,/g, ''));
+  total.textContent = new Intl.NumberFormat().format(
+    totalAmount + cartTotalAmount
+  );
+};
+
 const getBtnHandle = () => {
   const balanceVal = parseInt(balance.textContent.replace(/\,/g, ''));
   const cartTotalAmount = getCartTotal(cart.children);
@@ -199,13 +206,6 @@ const getCartTotal = (cartList) => {
     cartTotalAmount += products[v.id].price * v.children[2].value;
   });
   return cartTotalAmount;
-};
-
-const changeTotalAmount = (cartTotalAmount) => {
-  const totalAmount = parseInt(total.textContent.replace(/\,/g, ''));
-  total.textContent = new Intl.NumberFormat().format(
-    totalAmount + cartTotalAmount
-  );
 };
 
 const handleChangeBtn = () => {
