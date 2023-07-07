@@ -1,27 +1,27 @@
-const cart = document.getElementById('cart');
 const order = document.querySelector('.order-wrap');
+const cart = order.querySelector('#cart');
 const balance = order.querySelector('#balance');
 const amountInp = order.querySelector('.form-input.order-left');
 const depositBtn = order.querySelector('#deposit-btn');
-
-const changeBtn = document.querySelector('#change-btn');
-const btnGet = document.querySelector('#get-btn');
+const changeBtn = order.querySelector('#change-btn');
+const getBtn = order.querySelector('#get-btn');
 const getList = document.querySelector('#get-list');
 const total = document.querySelector('.total span');
-
 const myMoney = document.querySelector('#my-money');
 
-depositBtn.addEventListener('click', depositBtnHandle);
 let productList;
 
 // 상품 데이터 가져오기
 /***** 모든 함수: 데이터 가져온 후 실행 *****/
 let products;
-(async () => {
-  const res = await fetch('./productsData.json');
-  const json = await res.json();
-  products = json;
 
+const getData = async () => {
+  const res = await fetch('./productsData.json');
+  return await res.json();
+};
+
+(async () => {
+  products = await getData();
   createProducts();
 })();
 
@@ -32,27 +32,17 @@ const createProducts = () => {
   let allProductEl = '';
   const keys = Object.keys(products);
   keys.forEach((key) => {
-    if (products[key].stock) {
-      console.log(products[key].stock);
-      allProductEl += `<li>
-      <button data-name=${key} class="product" type="button">
-        <img src=${products[key].img} alt="" />
-        <span class="name">${products[key].name}</span>
-        <span class="round-text-box">${products[key].price}원</span>
+    console.log(products[key].stock);
+    allProductEl += `<li>
+      <button data-name=${key} class="product" type="button" ${
+      !products[key].stock ? 'disabled' : ''
+    }>
+      ${!products[key].stock ? '<span class="cover"></span>' : ''}
+      <img src=${products[key].img} alt="" />
+      <span class="name">${products[key].name}</span>
+      <span class="round-text-box">${products[key].price}원</span>
       </button>
-    </li>`;
-    } else {
-      // 품절 상품 표시
-      allProductEl += `<li>
-      <button data-name=${key} class="product" type="button" 
-      disabled>
-      <span class="cover"></span>
-        <img src=${products[key].img} alt="" />
-        <span class="name">${products[key].name}</span>
-        <span class="round-text-box">${products[key].price}원</span>
-      </button>
-    </li>`;
-    }
+      </li>`;
   });
   ul.innerHTML = allProductEl;
   // 상품 이벤트 리스너
@@ -62,35 +52,33 @@ const createProducts = () => {
   });
 };
 
-export function handleProduct(event) {
-  const current = event.currentTarget;
-  const name = current.dataset.name;
-  if (!current.style.outline) {
-    current.style.outline = '3px solid var(--main-color)';
-    createCartItem(name, cart);
-  } else {
-    current.style.outline = '';
-    deleteCartItem(name, cart);
-  }
-}
-
-// 장바구니 상품 추가
-function createCartItem(name, ul) {
+const createCartItem = (name, ul) => {
   ul.innerHTML += `
-    <li id=${name}>
-      <img src="${products[name].img}" alt="">
-      <p class="name">${products[name].name}</p>
-      <input type="number" class="amount" value=1>
-    </li>
+  <li id=${name}>
+  <img src="${products[name].img}" alt="">
+  <p class="name">${products[name].name}</p>
+  <input type="number" class="amount" value=1>
+  </li>
   `;
-}
+};
 
-function deleteCartItem(name) {
+const deleteCartItem = (name) => {
   const item = document.getElementById(name);
   cart.removeChild(item);
-}
+};
 
-function depositBtnHandle() {
+const handleProduct = (event) => {
+  const current = event.currentTarget;
+  const name = current.dataset.name;
+  current.classList.toggle('on');
+  if (current.classList.contains('on')) {
+    createCartItem(name, cart);
+  } else {
+    deleteCartItem(name, cart);
+  }
+};
+
+const depositBtnHandle = () => {
   if (amountInp.value) {
     const myMoneyVal = parseInt(myMoney.textContent.replace(/\,/g, ''));
     const amountVal = parseInt(amountInp.value);
@@ -113,17 +101,17 @@ function depositBtnHandle() {
   } else {
     alert('금액을 입력해주세요.');
   }
-}
+};
 
-export function inpQuantityHandle(e) {
+const quantityInpHandle = (e) => {
   const obj = quantityCheck(e);
   if (obj) {
     alert(obj.alertTxt);
     e.target.value = obj.val;
   }
-}
+};
 
-function quantityCheck(e) {
+const quantityCheck = (e) => {
   const stock = products[e.target.parentNode.id].stock;
   if (!e.target.value) {
     return { alertTxt: '숫자를 입력해주세요.', val: 1 };
@@ -140,75 +128,85 @@ function quantityCheck(e) {
   if (e.target.value > 100) {
     return { alertTxt: '최대 100개까지 구매 가능합니다.', val: 100 };
   }
-}
+};
 
-btnGet.addEventListener('click', btnGetHandle);
+const drawSoldOut = (id) => {
+  if (!products[id].stock) {
+    const span = document.createElement('span');
+    span.classList.add('cover');
+    const btn = document.querySelector(`[data-name="${id}"]`);
+    btn.setAttribute('disabled', '');
+    btn.prepend(span);
+  }
+};
 
-function btnGetHandle() {
+const drawGottenList = () => {
+  const idList = [...getList.children].map((v) => v.id);
+  // 획득한 음료에 같은 상품이 있다면
+  if (idList.includes(v.id)) {
+    getList.querySelector(`#${v.id}`).children[2].textContent =
+      parseInt(v.children[2].value) +
+      parseInt(getList.querySelector(`#${v.id}`).children[2].textContent);
+  } else {
+    // 획득한 음료에 같은 상품이 없다면
+    const clone = v.cloneNode(true);
+    // input -> span 변경
+    const input = clone.querySelector('input');
+    const span = document.createElement('span');
+    span.className = 'amount';
+    span.textContent = input.value;
+    clone.appendChild(span);
+    clone.removeChild(input);
+    getList.appendChild(clone);
+  }
+};
+
+const drawBuyProducts = () => {
+  const cartList = cart.children;
+  [...cartList].forEach((v) => {
+    // 데이터 재고 변경
+    products[v.id].stock -= parseInt(v.children[2].value);
+    // 획득한 음료 생성 및 변경
+    drawGottenList();
+    // 품절 표시
+    drawSoldOut(v.id);
+  });
+};
+
+const getBtnHandle = () => {
   const balanceVal = parseInt(balance.textContent.replace(/\,/g, ''));
   const cartTotalAmount = getCartTotal(cart.children);
-  // 잔액 부족한지 체크
+  // 잔액 부족하면 얼리리턴
   if (balanceVal < cartTotalAmount) {
     alert(`잔액이 ${cartTotalAmount - balanceVal}원 부족합니다.`);
     return;
   }
+  // 상품 선택 표시 모두 제거
+  productList.forEach((v) => v.classList.remove('on'));
   // 잔액 변경
   balance.textContent = balanceVal - cartTotalAmount;
   // 총금액 변경
   changeTotalAmount(cartTotalAmount);
-
-  const list = [];
-  getList.childNodes.forEach((v) => list.push(v.id));
-  const cartList = cart.children;
-  [...cartList].forEach((v) => {
-    products[v.id].stock -= parseInt(v.children[2].value);
-    if (list.includes(v.id)) {
-      getList.querySelector(`#${v.id}`).children[2].textContent =
-        parseInt(v.children[2].value) +
-        parseInt(getList.querySelector(`#${v.id}`).children[2].textContent);
-    } else {
-      const clone = v.cloneNode(true);
-
-      /* input -> span 변경 */
-      const input = clone.querySelector('input');
-      const span = document.createElement('span');
-      span.className = 'amount';
-      span.textContent = input.value;
-      clone.appendChild(span);
-      clone.removeChild(input);
-
-      getList.appendChild(clone);
-    }
-    // 품절 표시
-    if (!products[v.id].stock) {
-      soldOut(document.querySelector(`[data-name="${v.id}"]`));
-    }
-  });
+  // 획득한 음료 추가
+  drawBuyProducts();
+  // 장바구니 비우기
   cart.replaceChildren();
-  productList.forEach((v) => (v.style.outline = ''));
-}
+};
 
-function getCartTotal(cartList) {
+const getCartTotal = (cartList) => {
   let cartTotalAmount = 0;
   [...cartList].forEach((v) => {
     cartTotalAmount += products[v.id].price * v.children[2].value;
   });
   return cartTotalAmount;
-}
+};
 
-function changeTotalAmount(cartTotalAmount) {
+const changeTotalAmount = (cartTotalAmount) => {
   const totalAmount = parseInt(total.textContent.replace(/\,/g, ''));
   total.textContent = new Intl.NumberFormat().format(
     totalAmount + cartTotalAmount
   );
-}
-
-function soldOut(target) {
-  const span = document.createElement('span');
-  span.classList.add('cover');
-  target.setAttribute('disabled', '');
-  target.prepend(span);
-}
+};
 
 const handleChangeBtn = () => {
   // 잔액이 없으면 얼리리턴
@@ -220,7 +218,9 @@ const handleChangeBtn = () => {
   balance.textContent = 0;
 };
 
+depositBtn.addEventListener('click', depositBtnHandle);
+getBtn.addEventListener('click', getBtnHandle);
 changeBtn.addEventListener('click', handleChangeBtn);
 
 // 장바구니 상품 수량 input에 이벤트 등록
-cart.addEventListener('change', inpQuantityHandle);
+cart.addEventListener('change', quantityInpHandle);
