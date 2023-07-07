@@ -1,11 +1,9 @@
-import { handleProduct,
-  inpQuantityHandle
-} from './main.mjs';
+import { handleProduct, inpQuantityHandle } from './main.mjs';
 
 const products = document.getElementsByClassName('product');
 const cart = document.getElementById('cart');
 
-[...products].forEach(product => {
+[...products].forEach((product) => {
   product.addEventListener('click', handleProduct);
 });
 

@@ -1,110 +1,132 @@
 <!DOCTYPE html>
 <html lang="ko-KR">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Vending machine | CocaCola</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style/common.css">
-  <link rel="stylesheet" href="style/style.css">
-</head>
-<body>
-  <h1 class="logo"><img src="images/logo.png" alt="logo"></h1>
-  <div class="vending-machine-wrap">
-    <h2 class="a11y-hidden">자판기</h2>
-    <section class="vending-machine-left">
-      <h2 class="a11y-hidden">음료 구입</h2>
-      <ul class="product-list">
-        <li>
-          <button data-name="originalCola" class="product" type="button">
-            <img src="images/original-cola.png" alt="">
-            <span class="name">Original_Cola</span>
-            <span class="round-text-box">1000원</span>
-          </button>
-        </li>
-        <li>
-          <button data-name="violetCola" class="product" type="button" disabled>
-            <span class="cover"></span>
-            <img src="images/violet-cola.png" alt="">
-            <span class="name">Violet_Cola</span>
-            <span class="round-text-box">1000원</span>
-          </button>
-        </li>
-        <li>
-          <button data-name="yellowCola" class="product" type="button">
-            <img src="images/yellow-cola.png" alt="">
-            <span class="name">Yellow_Cola</span>
-            <span class="round-text-box">1000원</span>
-          </button>
-        </li>
-        <li>
-          <button data-name="coolCola" class="product" type="button">
-            <img src="images/cool-cola.png" alt="">
-            <span class="name">Cool_Cola</span>
-            <span class="round-text-box">1000원</span>
-          </button>
-        </li>
-        <li>
-          <button data-name="greenCola" class="product" type="button">
-            <img src="images/green-cola.png" alt="">
-            <span class="name">Green_Cola</span>
-            <span class="round-text-box">1000원</span>
-          </button>
-        </li>
-        <li>
-          <button data-name="orangeCola" class="product" type="button">
-            <img src="images/orange-cola.png" alt="">
-            <span class="name">Orange_Cola</span>
-            <span class="round-text-box">1000원</span>
-          </button>
-        </li>
-      </ul>
-      
-      <div class="order-wrap">
-        <div class="sub-box order-left">
-          <span>잔액:</span>
-          <div class="text-right">
-            <span id="balance">0</span>
-            원
-          </div>
-        </div>
-        <button class="white-btn" type="button">거스름돈 반환</button>
-        <!-- required? -->
-        <input class="form-input order-left" min="1000" step="1000" type="number" placeholder="입금액 입력" required>
-        <input class="white-btn" type="submit" value="입금">
-  
-        <ul class="list order-left" id="cart"></ul>
-        <input class="purple-btn" type="submit" value="획득">
-      </div>
-    </section>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Vending machine | CocaCola</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@500;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style/common.css" />
+    <link rel="stylesheet" href="style/style.css" />
+  </head>
+  <body>
+    <h1 class="logo"><img src="images/logo.png" alt="logo" /></h1>
+    <div class="vending-machine-wrap">
+      <h2 class="a11y-hidden">자판기</h2>
+      <section class="vending-machine-left">
+        <h2 class="a11y-hidden">음료 구입</h2>
+        <ul class="product-list">
+          <li>
+            <button data-name="originalCola" class="product" type="button">
+              <img src="images/original-cola.png" alt="" />
+              <span class="name">Original_Cola</span>
+              <span class="round-text-box">1000원</span>
+            </button>
+          </li>
+          <li>
+            <button
+              data-name="violetCola"
+              class="product"
+              type="button"
+              disabled
+            >
+              <span class="cover"></span>
+              <img src="images/violet-cola.png" alt="" />
+              <span class="name">Violet_Cola</span>
+              <span class="round-text-box">1000원</span>
+            </button>
+          </li>
+          <li>
+            <button data-name="yellowCola" class="product" type="button">
+              <img src="images/yellow-cola.png" alt="" />
+              <span class="name">Yellow_Cola</span>
+              <span class="round-text-box">1000원</span>
+            </button>
+          </li>
+          <li>
+            <button data-name="coolCola" class="product" type="button">
+              <img src="images/cool-cola.png" alt="" />
+              <span class="name">Cool_Cola</span>
+              <span class="round-text-box">1000원</span>
+            </button>
+          </li>
+          <li>
+            <button data-name="greenCola" class="product" type="button">
+              <img src="images/green-cola.png" alt="" />
+              <span class="name">Green_Cola</span>
+              <span class="round-text-box">1000원</span>
+            </button>
+          </li>
+          <li>
+            <button data-name="orangeCola" class="product" type="button">
+              <img src="images/orange-cola.png" alt="" />
+              <span class="name">Orange_Cola</span>
+              <span class="round-text-box">1000원</span>
+            </button>
+          </li>
+        </ul>
 
-    <div class="vending-machine-right-wrap">
-    <div class="vending-machine-right top">
-      <div class="box-wrap">
-        <div class="sub-box">
-          소지금:
-          <div class="text-right">
-            <span id="my-money">25,000</span>
-            원
+        <div class="order-wrap">
+          <div class="sub-box order-left">
+            <span>잔액:</span>
+            <div class="text-right">
+              <span id="balance">0</span>
+              원
+            </div>
+          </div>
+          <button class="white-btn" type="button" id="change-btn">
+            거스름돈 반환
+          </button>
+          <!-- required? -->
+          <input
+            class="form-input order-left"
+            min="1000"
+            step="1000"
+            type="number"
+            placeholder="입금액 입력"
+            required
+          />
+          <input
+            class="white-btn"
+            type="submit"
+            id="deposit-btn"
+            value="입금"
+          />
+
+          <ul class="list order-left" id="cart"></ul>
+          <input class="purple-btn" type="submit" id="get-btn" value="획득" />
+        </div>
+      </section>
+
+      <div class="vending-machine-right-wrap">
+        <div class="vending-machine-right top">
+          <div class="box-wrap">
+            <div class="sub-box">
+              소지금:
+              <div class="text-right">
+                <span id="my-money">25,000</span>
+                원
+              </div>
+            </div>
           </div>
         </div>
+
+        <section class="vending-machine-right bottom">
+          <h3>획득한 음료</h3>
+          <ul class="list" id="get-list"></ul>
+          <div class="total">
+            총금액:
+            <span>0</span>
+            원
+          </div>
+        </section>
       </div>
     </div>
-
-    <section class="vending-machine-right bottom">
-      <h3>획득한 음료</h3>
-      <ul class="list" id="get-list"></ul>
-      <div class="total">
-        총금액:
-        <span>0</span>
-        원
-      </div>
-    </section>
-  </div>
-  </div>
-  <script type="module" src="module/index.mjs"></script>
-</body>
+    <script type="module" src="module/index.mjs"></script>
+  </body>
 </html>
