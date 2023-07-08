@@ -57,7 +57,7 @@ const createCartItem = (name, ul) => {
   <li id=${name}>
   <img src="${products[name].img}" alt="">
   <p class="name">${products[name].name}</p>
-  <input type="number" class="amount" value=1>
+  <input type="number" class="amount" value=1 aria-label="수량">
   </li>
   `;
 };

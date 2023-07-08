@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vending machine | CocaCola</title>
+    <title>Vending machine | ColaCola</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -15,11 +15,11 @@
     <link rel="stylesheet" href="style/style.css" />
   </head>
   <body>
-    <h1 class="logo"><img src="images/logo.png" alt="logo" /></h1>
+    <h1 class="logo"><img src="images/logo.png" alt="ColaCola logo" /></h1>
     <div class="vending-machine-wrap">
       <h2 class="a11y-hidden">자판기</h2>
       <section class="vending-machine-left">
-        <h2 class="a11y-hidden">음료 구입</h2>
+        <h3 class="a11y-hidden">음료 구입</h3>
         <ul class="product-list"></ul>
 
         <div class="order-wrap">
@@ -43,12 +43,12 @@
           />
           <input
             class="white-btn"
-            type="submit"
+            type="button"
             id="deposit-btn"
             value="입금"
           />
 
-          <ul class="list order-left" id="cart"></ul>
+          <ul class="list order-left" id="cart" aria-label="장바구니"></ul>
           <input class="purple-btn" type="submit" id="get-btn" value="획득" />
         </div>
       </section>
