@@ -140,7 +140,7 @@ const drawSoldOut = (id) => {
   }
 };
 
-const drawGottenList = () => {
+const drawGottenList = (v) => {
   const idList = [...getList.children].map((v) => v.id);
   // 획득한 음료에 같은 상품이 있다면
   if (idList.includes(v.id)) {
@@ -167,7 +167,7 @@ const drawBuyProducts = () => {
     // 데이터 재고 변경
     products[v.id].stock -= parseInt(v.children[2].value);
     // 획득한 음료 생성 및 변경
-    drawGottenList();
+    drawGottenList(v);
     // 품절 표시
     drawSoldOut(v.id);
   });
