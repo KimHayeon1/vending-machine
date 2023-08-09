@@ -26,9 +26,11 @@ body {
   background-color: #fff;
 }
 .vending-machine-left {
+  display: flex;
+  flex-direction: column;
+  width: 360px;
   padding: 31px 27px 28px;
   box-sizing: border-box;
-  width: 360px;
 }
 .vending-machine-right-wrap {
   display: flex;
@@ -40,11 +42,10 @@ body {
   padding: 9px 27px;
 }
 .vending-machine-right.bottom {
-  padding: 25px 27px 26px;
+  padding: 26px 27px;
   flex-grow: 1;
 }
 .product-list {
-  align-self: flex-end;
   display: grid;
   width: 100%;
   grid-template-columns: repeat(3, 1fr);
@@ -75,7 +76,7 @@ body {
 }
 .product > .name {
   font-size: 0.9rem;
-  line-height: 1.3rem;
+  line-height: 1.1rem;
   margin: auto;
 }
 .round-text-box {
@@ -117,6 +118,7 @@ body {
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: 1fr 1fr 106px;
   gap: 12px;
+  margin-top: auto;
 }
 .order-left {
   grid-column: 1/3;
@@ -223,6 +225,7 @@ body {
 }
 .vending-machine-right.bottom .total {
   font-size: 1.2rem;
+  line-height: 2rem;
   text-align: right;
 }
 
