@@ -5,7 +5,8 @@
 <br>
 <br>
 [🔗벤딩머신 바로가기](https://kimhayeon1.github.io/vending-machine/)
-
+<br>
+<br>
 ## 기능
 
 #### 1. 상품을 클릭하여, 장바구니에 추가 및 삭제할 수 있다.
