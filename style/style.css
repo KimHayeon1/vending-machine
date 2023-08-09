@@ -8,6 +8,11 @@ body {
   min-width: 360px;
 }
 
+.logo > img {
+  width: 436px;
+  aspect-ratio: 436 / 204;
+}
+
 .vending-machine-wrap {
   margin: auto;
 }
@@ -195,7 +200,6 @@ body {
 .form-input {
   height: 32px;
   font-size: 1.3rem;
-  color: var(--gray);
 }
 .form-input:focus {
   color: black;
