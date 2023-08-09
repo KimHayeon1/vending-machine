@@ -3,6 +3,7 @@
 상품을 고르고 구매할 수 있는 웹 자판기 서비스입니다.
 <br>
 <br>
+<br>
 [🔗벤딩머신 바로가기](https://kimhayeon1.github.io/vending-machine/)
 
 ## 기능
