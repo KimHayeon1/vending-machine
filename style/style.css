@@ -8,7 +8,7 @@ body {
   min-width: 360px;
 }
 
-.logo > img {
+.logo img {
   width: 436px;
   aspect-ratio: 436 / 204;
 }
